@@ -1,8 +1,8 @@
 provider "aws" {
   version = "~> 2.56"
-  region     = "${AWS_DEFAULT_REGION}"
-  access_key = "${AWS_ACCESS_KEY_ID}"
-  secret_key = "${AWS_SECRET_ACCESS_KEY}"
+  region     = "us-west-2"
+  access_key = "${var.ak}"
+  secret_key = "${var.sa}"
 }
 
 
