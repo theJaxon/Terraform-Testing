@@ -18,6 +18,7 @@ resource "aws_key_pair" "generated_key" {
 */
 resource "aws_secretsmanager_secret" "tf_key_secretmanager_metadata4" {
   name = "tf_key_secretmanager_metadata4"
+  recovery_window_in_days = 0
 }
 
 /*
