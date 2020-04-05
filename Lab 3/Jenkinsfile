@@ -5,7 +5,7 @@ pipeline {
 
                 stage("Terraform init") {
                         steps {
-                            sh "cd "Lab 3""
+                            sh "cd \"Lab 3\""
                             sh "terraform init"
                         }
                     }
