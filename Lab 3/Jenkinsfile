@@ -17,7 +17,7 @@ pipeline {
 
                 stage("Terraform apply") {
                     steps {
-                        sh "cd \"Lab 3\" && pwd && ls && terraform apply"
+                        sh "cd \"Lab 3\" && pwd && ls && terraform apply -auto-approve"
                     }
                 }
         }
