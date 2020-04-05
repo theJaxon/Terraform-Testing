@@ -38,7 +38,7 @@ resource "aws_instance" "aws_private_instance_1" {
   count = "${var.number_of_instances}"
   key_name = "${aws_key_pair.generated_key.id}"
   subnet_id = "${aws_subnet.private_subnet_1.id}"
-  vpc_security_group_ids = ["${aws_security_group.allow_bastion_ssh.id}"]
+  vpc_security_group_ids = ["${aws_security_group.allow_bastion_ssh.id},${aws_security_group.allow_http_traffic.id}"]
 
   tags = {
     Name = "aws_private_instance_1"
@@ -52,7 +52,7 @@ resource "aws_instance" "aws_private_instance_2" {
   count = "${var.number_of_instances}"
   key_name = "${aws_key_pair.generated_key.id}"
   subnet_id = "${aws_subnet.private_subnet_2.id}"
-  vpc_security_group_ids = ["${aws_security_group.allow_bastion_ssh.id}"]
+  vpc_security_group_ids = ["${aws_security_group.allow_bastion_ssh.id},${aws_security_group.allow_http_traffic.id}"]
 
   tags = {
     Name = "aws_private_instance_2"
