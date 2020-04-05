@@ -4,7 +4,7 @@ pipeline {
 
                 stage("Terraform destroy") {
                     steps {
-                        sh "terraform destroy -auto-approve"
+                        sh "cd \"Lab 3\" && pwd && ls && terraform destroy -auto-approve"
                     }
                 }
         }
