@@ -5,20 +5,19 @@ pipeline {
 
                 stage("Terraform init") {
                         steps {
-                            sh "cd \"Lab 3\" && pwd && ls"
-                            sh "terraform init"
+                            sh "cd \"Lab 3\" && pwd && ls && terraform init"
                         }
                     }
 
                 stage("Terraform plan") {
                     steps {
-                        sh "terraform plan"
+                        sh "cd \"Lab 3\" && pwd && ls && terraform plan"
                     }
                 }
 
                 stage("Terraform apply") {
                     steps {
-                        sh "terraform apply"
+                        sh "cd \"Lab 3\" && pwd && ls && terraform apply"
                     }
                 }
         }
