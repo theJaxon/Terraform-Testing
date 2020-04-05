@@ -2,6 +2,14 @@
 pipeline {
    agent any
         stages {
+
+                stage("Terraform init") {
+                        steps {
+                            sh "cd Lab 3"
+                            sh "terraform init"
+                        }
+                    }
+
                 stage("Terraform plan") {
                     steps {
                         sh "terraform plan"
