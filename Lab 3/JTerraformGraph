@@ -1,6 +1,12 @@
 pipeline {
    agent any
         stages {
+            
+            stage("Terraform init") {
+                        steps {
+                            sh "cd \"Lab 3\" && pwd && ls && terraform init -var ak=\"${env.AWS_ACCESS_KEY_ID}\" -var sa=\"${env.AWS_SECRET_ACCESS_KEY}\""
+                        }
+                    }
 
                 stage("Terraform graph") {
                     steps {
