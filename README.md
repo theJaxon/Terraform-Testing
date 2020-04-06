@@ -1,4 +1,6 @@
 # Terraform Labs
+[![forthebadge](https://forthebadge.com/images/badges/cc-0.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/powered-by-jeffs-keyboard.svg)](https://forthebadge.com)
 ### Lab 1:
 - Make a VPC on AWS 
 - 2 public subnets and 2 private subnets each in a different AZ
