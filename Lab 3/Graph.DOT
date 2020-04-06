@@ -1,0 +1,135 @@
+digraph {
+	compound = "true"
+	newrank = "true"
+	subgraph "root" {
+		"[root] aws_instance.aws_private_instance_1" [label = "aws_instance.aws_private_instance_1", shape = "box"]
+		"[root] aws_instance.aws_private_instance_2" [label = "aws_instance.aws_private_instance_2", shape = "box"]
+		"[root] aws_instance.aws_public_instance_1" [label = "aws_instance.aws_public_instance_1", shape = "box"]
+		"[root] aws_instance.aws_public_instance_2" [label = "aws_instance.aws_public_instance_2", shape = "box"]
+		"[root] aws_instance.bastion_server" [label = "aws_instance.bastion_server", shape = "box"]
+		"[root] aws_internet_gateway.internet_gateway" [label = "aws_internet_gateway.internet_gateway", shape = "box"]
+		"[root] aws_key_pair.generated_key" [label = "aws_key_pair.generated_key", shape = "box"]
+		"[root] aws_route_table.private_route_table" [label = "aws_route_table.private_route_table", shape = "box"]
+		"[root] aws_route_table.public_route_table" [label = "aws_route_table.public_route_table", shape = "box"]
+		"[root] aws_route_table_association.private_association_1" [label = "aws_route_table_association.private_association_1", shape = "box"]
+		"[root] aws_route_table_association.private_association_2" [label = "aws_route_table_association.private_association_2", shape = "box"]
+		"[root] aws_route_table_association.public_association_1" [label = "aws_route_table_association.public_association_1", shape = "box"]
+		"[root] aws_route_table_association.public_association_2" [label = "aws_route_table_association.public_association_2", shape = "box"]
+		"[root] aws_secretsmanager_secret.tf_key_secretmanager_metadata4" [label = "aws_secretsmanager_secret.tf_key_secretmanager_metadata4", shape = "box"]
+		"[root] aws_secretsmanager_secret_version.store_aws_secret" [label = "aws_secretsmanager_secret_version.store_aws_secret", shape = "box"]
+		"[root] aws_security_group.allow_bastion_ssh" [label = "aws_security_group.allow_bastion_ssh", shape = "box"]
+		"[root] aws_security_group.allow_http_traffic" [label = "aws_security_group.allow_http_traffic", shape = "box"]
+		"[root] aws_security_group.ssh_connection_allow" [label = "aws_security_group.ssh_connection_allow", shape = "box"]
+		"[root] aws_subnet.private_subnet_1" [label = "aws_subnet.private_subnet_1", shape = "box"]
+		"[root] aws_subnet.private_subnet_2" [label = "aws_subnet.private_subnet_2", shape = "box"]
+		"[root] aws_subnet.public_subnet_1" [label = "aws_subnet.public_subnet_1", shape = "box"]
+		"[root] aws_subnet.public_subnet_2" [label = "aws_subnet.public_subnet_2", shape = "box"]
+		"[root] aws_vpc.main_vpc" [label = "aws_vpc.main_vpc", shape = "box"]
+		"[root] local_file.aws_secret_local_file" [label = "local_file.aws_secret_local_file", shape = "box"]
+		"[root] output.private_key" [label = "output.private_key", shape = "note"]
+		"[root] output.public_key" [label = "output.public_key", shape = "note"]
+		"[root] provider.aws" [label = "provider.aws", shape = "diamond"]
+		"[root] provider.local" [label = "provider.local", shape = "diamond"]
+		"[root] provider.tls" [label = "provider.tls", shape = "diamond"]
+		"[root] tls_private_key.tf_generated_key" [label = "tls_private_key.tf_generated_key", shape = "box"]
+		"[root] var.ak" [label = "var.ak", shape = "note"]
+		"[root] var.ami_id" [label = "var.ami_id", shape = "note"]
+		"[root] var.instance_type" [label = "var.instance_type", shape = "note"]
+		"[root] var.number_of_instances" [label = "var.number_of_instances", shape = "note"]
+		"[root] var.sa" [label = "var.sa", shape = "note"]
+		"[root] aws_instance.aws_private_instance_1" -> "[root] aws_key_pair.generated_key"
+		"[root] aws_instance.aws_private_instance_1" -> "[root] aws_security_group.allow_bastion_ssh"
+		"[root] aws_instance.aws_private_instance_1" -> "[root] aws_security_group.allow_http_traffic"
+		"[root] aws_instance.aws_private_instance_1" -> "[root] aws_subnet.private_subnet_1"
+		"[root] aws_instance.aws_private_instance_1" -> "[root] var.ami_id"
+		"[root] aws_instance.aws_private_instance_1" -> "[root] var.instance_type"
+		"[root] aws_instance.aws_private_instance_1" -> "[root] var.number_of_instances"
+		"[root] aws_instance.aws_private_instance_2" -> "[root] aws_key_pair.generated_key"
+		"[root] aws_instance.aws_private_instance_2" -> "[root] aws_security_group.allow_bastion_ssh"
+		"[root] aws_instance.aws_private_instance_2" -> "[root] aws_security_group.allow_http_traffic"
+		"[root] aws_instance.aws_private_instance_2" -> "[root] aws_subnet.private_subnet_2"
+		"[root] aws_instance.aws_private_instance_2" -> "[root] var.ami_id"
+		"[root] aws_instance.aws_private_instance_2" -> "[root] var.instance_type"
+		"[root] aws_instance.aws_private_instance_2" -> "[root] var.number_of_instances"
+		"[root] aws_instance.aws_public_instance_1" -> "[root] aws_key_pair.generated_key"
+		"[root] aws_instance.aws_public_instance_1" -> "[root] aws_security_group.allow_bastion_ssh"
+		"[root] aws_instance.aws_public_instance_1" -> "[root] aws_security_group.allow_http_traffic"
+		"[root] aws_instance.aws_public_instance_1" -> "[root] aws_subnet.public_subnet_1"
+		"[root] aws_instance.aws_public_instance_1" -> "[root] var.ami_id"
+		"[root] aws_instance.aws_public_instance_1" -> "[root] var.instance_type"
+		"[root] aws_instance.aws_public_instance_1" -> "[root] var.number_of_instances"
+		"[root] aws_instance.aws_public_instance_2" -> "[root] aws_key_pair.generated_key"
+		"[root] aws_instance.aws_public_instance_2" -> "[root] aws_security_group.allow_bastion_ssh"
+		"[root] aws_instance.aws_public_instance_2" -> "[root] aws_security_group.allow_http_traffic"
+		"[root] aws_instance.aws_public_instance_2" -> "[root] aws_subnet.public_subnet_2"
+		"[root] aws_instance.aws_public_instance_2" -> "[root] var.ami_id"
+		"[root] aws_instance.aws_public_instance_2" -> "[root] var.instance_type"
+		"[root] aws_instance.aws_public_instance_2" -> "[root] var.number_of_instances"
+		"[root] aws_instance.bastion_server" -> "[root] aws_key_pair.generated_key"
+		"[root] aws_instance.bastion_server" -> "[root] aws_security_group.ssh_connection_allow"
+		"[root] aws_instance.bastion_server" -> "[root] aws_subnet.public_subnet_1"
+		"[root] aws_instance.bastion_server" -> "[root] var.ami_id"
+		"[root] aws_instance.bastion_server" -> "[root] var.instance_type"
+		"[root] aws_instance.bastion_server" -> "[root] var.number_of_instances"
+		"[root] aws_internet_gateway.internet_gateway" -> "[root] aws_vpc.main_vpc"
+		"[root] aws_key_pair.generated_key" -> "[root] provider.aws"
+		"[root] aws_key_pair.generated_key" -> "[root] tls_private_key.tf_generated_key"
+		"[root] aws_route_table.private_route_table" -> "[root] aws_vpc.main_vpc"
+		"[root] aws_route_table.public_route_table" -> "[root] aws_internet_gateway.internet_gateway"
+		"[root] aws_route_table_association.private_association_1" -> "[root] aws_route_table.private_route_table"
+		"[root] aws_route_table_association.private_association_1" -> "[root] aws_subnet.private_subnet_1"
+		"[root] aws_route_table_association.private_association_2" -> "[root] aws_route_table.private_route_table"
+		"[root] aws_route_table_association.private_association_2" -> "[root] aws_subnet.private_subnet_2"
+		"[root] aws_route_table_association.public_association_1" -> "[root] aws_route_table.public_route_table"
+		"[root] aws_route_table_association.public_association_1" -> "[root] aws_subnet.public_subnet_1"
+		"[root] aws_route_table_association.public_association_2" -> "[root] aws_route_table.public_route_table"
+		"[root] aws_route_table_association.public_association_2" -> "[root] aws_subnet.public_subnet_2"
+		"[root] aws_secretsmanager_secret.tf_key_secretmanager_metadata4" -> "[root] provider.aws"
+		"[root] aws_secretsmanager_secret_version.store_aws_secret" -> "[root] aws_secretsmanager_secret.tf_key_secretmanager_metadata4"
+		"[root] aws_secretsmanager_secret_version.store_aws_secret" -> "[root] tls_private_key.tf_generated_key"
+		"[root] aws_security_group.allow_bastion_ssh" -> "[root] aws_vpc.main_vpc"
+		"[root] aws_security_group.allow_http_traffic" -> "[root] aws_vpc.main_vpc"
+		"[root] aws_security_group.ssh_connection_allow" -> "[root] aws_vpc.main_vpc"
+		"[root] aws_subnet.private_subnet_1" -> "[root] aws_vpc.main_vpc"
+		"[root] aws_subnet.private_subnet_2" -> "[root] aws_vpc.main_vpc"
+		"[root] aws_subnet.public_subnet_1" -> "[root] aws_vpc.main_vpc"
+		"[root] aws_subnet.public_subnet_2" -> "[root] aws_vpc.main_vpc"
+		"[root] aws_vpc.main_vpc" -> "[root] provider.aws"
+		"[root] local_file.aws_secret_local_file" -> "[root] provider.local"
+		"[root] local_file.aws_secret_local_file" -> "[root] tls_private_key.tf_generated_key"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] aws_instance.aws_private_instance_1"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] aws_instance.aws_private_instance_2"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] aws_instance.aws_public_instance_1"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] aws_instance.aws_public_instance_2"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] aws_instance.bastion_server"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] aws_route_table_association.private_association_1"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] aws_route_table_association.private_association_2"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] aws_route_table_association.public_association_1"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] aws_route_table_association.public_association_2"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] aws_secretsmanager_secret_version.store_aws_secret"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] local_file.aws_secret_local_file"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] output.private_key"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] output.public_key"
+		"[root] output.private_key" -> "[root] tls_private_key.tf_generated_key"
+		"[root] output.public_key" -> "[root] tls_private_key.tf_generated_key"
+		"[root] provider.aws (close)" -> "[root] aws_instance.aws_private_instance_1"
+		"[root] provider.aws (close)" -> "[root] aws_instance.aws_private_instance_2"
+		"[root] provider.aws (close)" -> "[root] aws_instance.aws_public_instance_1"
+		"[root] provider.aws (close)" -> "[root] aws_instance.aws_public_instance_2"
+		"[root] provider.aws (close)" -> "[root] aws_instance.bastion_server"
+		"[root] provider.aws (close)" -> "[root] aws_route_table_association.private_association_1"
+		"[root] provider.aws (close)" -> "[root] aws_route_table_association.private_association_2"
+		"[root] provider.aws (close)" -> "[root] aws_route_table_association.public_association_1"
+		"[root] provider.aws (close)" -> "[root] aws_route_table_association.public_association_2"
+		"[root] provider.aws (close)" -> "[root] aws_secretsmanager_secret_version.store_aws_secret"
+		"[root] provider.aws" -> "[root] var.ak"
+		"[root] provider.aws" -> "[root] var.sa"
+		"[root] provider.local (close)" -> "[root] local_file.aws_secret_local_file"
+		"[root] provider.tls (close)" -> "[root] tls_private_key.tf_generated_key"
+		"[root] root" -> "[root] meta.count-boundary (EachMode fixup)"
+		"[root] root" -> "[root] provider.aws (close)"
+		"[root] root" -> "[root] provider.local (close)"
+		"[root] root" -> "[root] provider.tls (close)"
+		"[root] tls_private_key.tf_generated_key" -> "[root] provider.tls"
+	}
+}
