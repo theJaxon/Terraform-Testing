@@ -152,7 +152,7 @@ terraform {
 - 2 security groups 
    - one to allow SSH connection on the bastion server by opening port `22`
    - one to allow HTTP connections on the public EC2s by opening port `80`
- <details><summary> Terraform EC2s </summary>
+ <details><summary>:five: EC2s</summary>
 <p>
 
 ```HCL
@@ -237,7 +237,7 @@ resource "aws_instance" "bastion_server" {
 
 
 
-<details><summary>Security groups</summary>
+<details><summary>:lock: Security groups</summary>
 <p>
 
 ```HCL
@@ -292,6 +292,167 @@ resource "aws_security_group" "ssh_connection_allow" {
   }
 }
 
+
+```
+
+</p>
+</details>
+
+---
+
+### Lab 3:
+- `Dockerfile` that uses [jenkins](https://hub.docker.com/r/jenkins/jenkins/) image as a base then installs `terraform` on it
+- A conteiner that uses the previously built image using the Dockerfile
+  - `docker build -t jenkinsTerra .`
+  - `docker run -p 8080:8080 jenkinsTerra `
+  - Open a different vagrant terminal and enter the container to get the password that'll be used for jenkins first run ` docker container exec -it CONTAINER_ID /bin/bash `
+- Create a pipeline in jenkins that builds the infrastructure using terraform, a useful resource for linking the AWS credentials with jenkins pipeline using environment variables is this [answer](https://serverfault.com/a/886491)
+- Configure ansible on the host (vagrant in my case) to run using the bastion server created earlier, use this [answer](https://serverfault.com/a/1008815) for help.
+- Run nginx playbook to configure the 2 public EC2s 
+
+
+<details><summary>Dockerfile</summary>
+<p>
+
+```python
+FROM jenkins/jenkins
+USER root
+WORKDIR /home/
+RUN pwd && ls && \
+    wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip && \
+    pwd && ls && \
+    unzip terraform_0.12.24_linux_amd64.zip && \
+    pwd && ls && \
+    rm terraform_0.12.24_linux_amd64.zip && \
+    mv terraform /bin/
+
+EXPOSE 8080
+```
+
+</p>
+</details>
+
+
+<details><summary>Jenkinsfile</summary>
+<p>
+
+```groovy
+
+pipeline {
+   agent any
+        stages {
+
+                stage("Terraform init") {
+                        steps {
+                            sh "cd \"Lab 3\" && pwd && ls && terraform init -var ak=\"${env.AWS_ACCESS_KEY_ID}\" -var sa=\"${env.AWS_SECRET_ACCESS_KEY}\""
+                        }
+                    }
+
+                stage("Terraform plan") {
+                    steps {
+                        sh "cd \"Lab 3\" && pwd && ls && terraform plan"
+                    }
+                }
+
+                stage("Terraform apply") {
+                    steps {
+                        sh "cd \"Lab 3\" && pwd && ls && terraform apply -auto-approve"
+                    }
+                }
+        }
+}
+```
+
+</p>
+</details>
+
+* In my case i made 3 different jenkinsfiles 
+  - one responsible for `init plan and apply`
+  - one for generating the graph using `terraform graph`
+  - one for destroying
+  
+
+<details><summary>JTerraformGraph file</summary>
+<p>
+
+
+```groovy
+pipeline {
+   agent any
+        stages {
+            
+            stage("Terraform init") {
+                        steps {
+                            sh "cd \"Lab 3\" && pwd && ls && terraform init -var ak=\"${env.AWS_ACCESS_KEY_ID}\" -var sa=\"${env.AWS_SECRET_ACCESS_KEY}\""
+                        }
+                    }
+
+                stage("Terraform graph") {
+                    steps {
+                        sh "cd \"Lab 3\" && pwd && ls && terraform graph"
+                    }
+                }
+        }
+}
+```
+
+</p>
+</details>
+
+
+<details><summary>JenkinsDestroy</summary>
+<p>
+
+
+```groovy
+pipeline {
+   agent any
+        stages {
+
+                stage("Terraform destroy") {
+                    steps {
+                        sh "cd \"Lab 3\" && pwd && ls && terraform destroy -auto-approve"
+                    }
+                }
+        }
+}
+```
+
+</p>
+</details>
+
+
+<details><summary>ansible's nginx playbook</summary>
+<p>
+
+```yaml
+---
+- hosts: Public
+  become: true
+  user: ec2-user
+  vars:
+    - ansible_ssh_user: "ec2-user"
+    - ansible_ssh_common_args: >
+          -o ProxyCommand="ssh -W %h:%p -q {{ ansible_ssh_user }}@54.202.10.158" \
+          -o ServerAliveInterval=5 \
+          -o StrictHostKeyChecking=no
+  tasks:
+    - name: epel-release install
+      package:
+        name: epel-release 
+        state: present 
+        
+
+    - name: download nginx 
+      package:
+        name: nginx 
+        state: present 
+    
+    - name: enable nginx 
+      systemd:
+        name: nginx 
+        state: started 
+        enabled: yes
 
 ```
 
