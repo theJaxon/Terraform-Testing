@@ -1,0 +1,11 @@
+pipeline {
+   agent any
+        stages {
+
+                stage("Terraform graph") {
+                    steps {
+                        sh "cd \"Lab 3\" && pwd && ls && terraform graph"
+                    }
+                }
+        }
+}
