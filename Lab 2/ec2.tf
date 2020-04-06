@@ -84,7 +84,7 @@ resource "aws_security_group" "allow_http_traffic" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["${aws_vpc.main_vpc.cidr_block}"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
@@ -122,9 +122,4 @@ resource "aws_security_group" "ssh_connection_allow" {
   tags = {
     Name = "ssh_connection_allow"
   }
-}
-
-output "public_ip" {
-  description = "List of public IP addresses assigned to the instances, if applicable"
-  value       = "aws_instance.this.*.public_ip"
 }
