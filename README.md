@@ -423,8 +423,27 @@ pipeline {
 </p>
 </details>
 
+<details>
+  <summary>Ansible's inventory</summary>
+<p>
 
-<details><summary>ansible's nginx playbook</summary>
+```yaml
+[Bastion]
+54.202.10.158
+
+[Private]
+10.0.2.11
+10.0.3.162
+
+[Public]
+10.0.1.170
+10.0.0.246
+```
+
+</p>
+</details>
+
+<details><summary>Ansible's nginx playbook</summary>
 <p>
 
 ```yaml
@@ -457,6 +476,33 @@ pipeline {
         enabled: yes
 
 ```
+
+</p>
+</details>
+
+<details>
+  <summary>
+    <code>ssh-agent</code> before running ansible playbook
+  </summary>
+<p>
+
+```bash
+$ ssh-agent bash
+
+bash$  chmod 400 ~/.ssh/keyname.pem
+
+bash$ ssh-add ~/.ssh/keyname.pem
+
+# get the ip address of the bastion host then 
+
+bash$ ssh -A ec2-user@bastion_ip_address
+
+# from there just ssh into the private ip of the EC2
+[ec2-user@ip-]$ ssh ec2-user@ip_address
+```
+
+#### Run the playbook by specifing the inventory `-i` and selecting the target group in the `hosts` section
+`ansible-playbook -i inventory  nginx.yaml  `
 
 </p>
 </details>
